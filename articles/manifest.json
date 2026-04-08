@@ -9,12 +9,12 @@
         {
           "slug": "da-01",
           "num": "01",
-          "title": "Claude Code란 무엇인가 — 첫 번째 주문",
-          "excerpt": "지팡이를 처음 잡은 날.\n주문의 기본 원리부터 첫 실행까지, 입학 첫날의 기록.",
+          "title": "첫 번째 주문 — 지팡이를 잡다 🪄",
+          "excerpt": "지팡이(Claude Code)를 손에 쥐고, 나만의 마법서를 쓰고,\n첫 주문을 외쳐보는 시간.",
           "tag": "입문",
           "audience": "전체 직종",
-          "date": "2026-04-12",
-          "status": "draft"
+          "date": "2026-04-08",
+          "status": "published"
         },
         {
           "slug": "da-02",

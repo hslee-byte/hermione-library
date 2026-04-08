@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermione's Library — 헤르미온느의 도서관</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --bg-white: #fffcf5;
+    --bg-dark: #1c1917;
+    --ink: #1c1917;
+    --ink-secondary: #57534e;
+    --ink-light: #a8a29e;
+    --maroon: #7c2d12;
+    --maroon-light: #fce7da;
+    --gold: #b45309;
+    --gold-bg: #fef3c7;
+    --cream: #fef7ed;
+    --border: #d6d3ce;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Subtle gold dust */
+  .particles {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #d4a853;
+    border-radius: 50%;
+    opacity: 0;
+    animation: drift linear infinite;
+  }
+
+  @keyframes drift {
+    0% { opacity: 0; transform: translateY(100vh) translateX(0); }
+    15% { opacity: 0.3; }
+    85% { opacity: 0.12; }
+    100% { opacity: 0; transform: translateY(-20px) translateX(30px); }
+  }
+
+  .particle:nth-child(1) { left: 8%; animation-duration: 20s; animation-delay: 0s; width: 2px; height: 2px; }
+  .particle:nth-child(2) { left: 25%; animation-duration: 26s; animation-delay: 5s; }
+  .particle:nth-child(3) { left: 48%; animation-duration: 22s; animation-delay: 9s; width: 2px; height: 2px; }
+  .particle:nth-child(4) { left: 68%; animation-duration: 28s; animation-delay: 3s; width: 2.5px; height: 2.5px; }
+  .particle:nth-child(5) { left: 85%; animation-duration: 24s; animation-delay: 7s; }
+
+  .wrapper { position: relative; z-index: 1; }
+
+  /* ===== Top Bar ===== */
+  .topbar {
+    background: var(--bg-dark);
+    color: #d6d3ce;
+    text-align: center;
+    padding: 10px 2rem;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .topbar a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .topbar a:hover { text-decoration: underline; }
+
+  /* ===== Header ===== */
+  header {
+    background: var(--bg-white);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .header-brand {
+    max-width: 1080px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 36px 2rem 22px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .masthead {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+
+  .masthead-sub {
+    font-size: 13px;
+    color: var(--ink-light);
+    margin-top: 8px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  .header-nav {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .header-nav a {
+    color: var(--ink-secondary);
+    text-decoration: none;
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition: all 0.15s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+  }
+
+  .header-nav a:hover { color: var(--maroon); }
+
+  .header-nav a.active {
+    color: var(--maroon);
+    border-bottom-color: var(--maroon);
+  }
+
+  /* ===== Hero Card ===== */
+  .hero-card {
+    max-width: 1080px;
+    margin: 48px auto 0;
+    padding: 0 2rem;
+  }
+
+  .hero-card-inner {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 320px;
+    position: relative;
+  }
+
+  .hero-card-inner::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 60%;
+    height: 180%;
+    background: radial-gradient(ellipse, rgba(212,168,83,0.05) 0%, transparent 60%);
+    pointer-events: none;
+    animation: softglow 8s ease-in-out infinite;
+  }
+
+  @keyframes softglow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .hc-photo {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    background: var(--bg-white);
+  }
+
+  .hc-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    mix-blend-mode: multiply;
+  }
+
+  .hc-content {
+    position: relative;
+    z-index: 1;
+    padding: 48px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hc-content blockquote {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.75;
+    margin-bottom: 24px;
+    padding-left: 20px;
+    border-left: 3px solid var(--maroon);
+    letter-spacing: -0.02em;
+  }
+
+  .hc-content .hc-body {
+    font-size: 16px;
+    color: var(--ink-secondary);
+    line-height: 1.85;
+    margin-bottom: 20px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .hc-content cite {
+    font-size: 14px;
+    color: var(--ink-light);
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .hc-wand {
+    display: inline-block;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  /* ===== Featured Article ===== */
+  .featured {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 2rem 40px;
+  }
+
+  .featured-label {
+    display: inline-block;
+    padding: 5px 14px;
+    background: var(--maroon);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .featured h2 {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 18px;
+    color: var(--ink);
+    letter-spacing: -0.025em;
+  }
+
+  .featured .f-excerpt {
+    font-size: 17px;
+    color: var(--ink-secondary);
+    line-height: 1.8;
+    margin-bottom: 24px;
+    max-width: 720px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .featured .f-meta {
+    font-size: 14px;
+    color: var(--ink-light);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 400;
+  }
+
+  /* ===== Section Divider ===== */
+  .divider {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .divider hr {
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ===== Articles Section ===== */
+  .articles-section {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px 2rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .section-header h2 {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+
+  .section-header span {
+    font-size: 13px;
+    color: var(--ink-light);
+    font-weight: 400;
+  }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .article-item {
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .article-item:nth-child(odd) {
+    border-right: 1px solid var(--border);
+  }
+
+  .article-item:hover {
+    background: var(--cream);
+  }
+
+  .article-num {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-size: 34px;
+    color: var(--ink-light);
+    margin-bottom: 12px;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .article-item:hover .article-num {
+    color: var(--maroon);
+  }
+
+  .article-item h3 {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+
+  .article-item p {
+    font-size: 15px;
+    color: var(--ink-secondary);
+    line-height: 1.75;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .article-meta {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--ink-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 400;
+  }
+
+  .article-tag {
+    padding: 4px 12px;
+    background: var(--maroon-light);
+    color: var(--maroon);
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 2px;
+  }
+
+  /* ===== Newsletter ===== */
+  .newsletter {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 2rem 64px;
+  }
+
+  .newsletter-inner {
+    background: var(--bg-dark);
+    color: #e7e5e4;
+    padding: 56px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .newsletter-inner::before {
+    content: '';
+    position: absolute;
+    top: -80%;
+    right: -40%;
+    width: 160%;
+    height: 260%;
+    background: radial-gradient(ellipse, rgba(212,168,83,0.05) 0%, transparent 50%);
+    animation: softglow 10s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .newsletter-inner > * { position: relative; z-index: 1; }
+
+  .nl-icon {
+    font-size: 52px;
+    flex-shrink: 0;
+    animation: float 5s ease-in-out infinite;
+  }
+
+  .newsletter-inner h3 {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold-bg);
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+
+  .newsletter-inner p {
+    font-size: 15px;
+    color: #a8a29e;
+    margin-bottom: 20px;
+    line-height: 1.75;
+    font-weight: 400;
+  }
+
+  .nl-form {
+    display: flex;
+    gap: 8px;
+  }
+
+  .nl-form input {
+    padding: 14px 18px;
+    background: #292524;
+    border: 1px solid #44403c;
+    color: #e7e5e4;
+    font-size: 15px;
+    width: 280px;
+    outline: none;
+    font-family: 'Pretendard', sans-serif;
+  }
+
+  .nl-form input::placeholder { color: #78716c; }
+  .nl-form input:focus { border-color: #78716c; }
+
+  .nl-form button {
+    padding: 14px 28px;
+    background: var(--gold);
+    color: white;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Pretendard', sans-serif;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+
+  .nl-form button:hover { background: #ca6a09; }
+
+  /* ===== Footer ===== */
+  footer {
+    background: var(--bg-white);
+    border-top: 2px solid var(--ink);
+    padding: 28px 2rem;
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-light);
+    font-weight: 400;
+  }
+
+  footer a {
+    color: var(--ink-secondary);
+    text-decoration: none;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 960px) {
+    .hero-card-inner { grid-template-columns: 220px 1fr; }
+    .hc-content { padding: 36px 40px; }
+    .hc-content blockquote { font-size: 20px; }
+  }
+
+  @media (max-width: 768px) {
+    .hero-card-inner { grid-template-columns: 1fr; }
+    .hc-photo { height: 300px; }
+    .hc-content { padding: 32px 28px; }
+    .hc-content blockquote { font-size: 18px; }
+    .featured h2 { font-size: 28px; }
+    .featured .f-excerpt { font-size: 16px; }
+    .articles-grid { grid-template-columns: 1fr; }
+    .article-item:nth-child(odd) { border-right: none; }
+    .masthead { font-size: 30px; }
+    .header-nav { overflow-x: auto; justify-content: flex-start; padding: 0 1rem; }
+    .header-nav a { padding: 12px 16px; white-space: nowrap; font-size: 14px; }
+    .newsletter-inner { flex-direction: column; text-align: center; padding: 40px 24px; }
+    .nl-form { flex-direction: column; width: 100%; }
+    .nl-form input { width: 100%; }
+    .articles-section { padding: 32px 1.5rem; }
+    .section-header h2 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="particles">
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+</div>
+
+<div class="wrapper">
+
+<!-- Top Bar -->
+<div class="topbar">
+  🦉 매일 아침, 전문직을 위한 AI 주문 하나가 배달됩니다 — <a href="#">부엉이 우편 구독 →</a>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="header-brand">
+    <div class="masthead">Hermione's Library</div>
+    <div class="masthead-sub">헤르미온느의 도서관 · Since 2026</div>
+  </div>
+  <nav class="header-nav">
+    <a href="#" class="active">📚 도서관 로비</a>
+    <a href="#">⚡ 주문 교실</a>
+    <a href="#">🪶 업무 일기</a>
+    <a href="#">🔓 입학 안내</a>
+    <a href="#">🦉 부엉이 우편</a>
+  </nav>
+</header>
+
+<!-- Hero Card -->
+<section class="hero-card">
+  <div class="hero-card-inner">
+    <div class="hc-photo">
+      <img src="hermione_Profile.jpg" alt="Hermione">
+    </div>
+    <div class="hc-content">
+      <blockquote>
+        "저도 처음엔 레비오사 하나<br>
+        제대로 못 했어요.<br>
+        그런데 지금은 여기까지 왔죠."
+      </blockquote>
+      <p class="hc-body">
+        마법(AI)이 어려운 게 아니에요. 저만 따라오시면 돼요.<br>
+        제가 먼저 읽고, 먼저 실패하고, 길을 정리해뒀으니까요. <span class="hc-wand">🪄</span>
+      </p>
+      <cite>— Hermione, 머글 출신 마법사</cite>
+    </div>
+  </div>
+</section>
+
+<!-- Featured -->
+<section class="featured">
+  <div class="featured-label">최신 업무 일기</div>
+  <h2>마법사, 전학 오다 🪄</h2>
+  <p class="f-excerpt">
+    2026년 4월의 어느 날, 호그와트에서 머글 세계로 전학 온 마법사가 있었어요.
+    50명의 전문직 — 변호사, 의사, 약사, 회계사 — 앞에서 AI를 알려주는 것이 첫 번째 임무.
+    머글 세계의 대선배들이지만, 마법만큼은 제가 선배예요.
+  </p>
+  <div class="f-meta">
+    <span>📚 Hermione</span>
+    <span>·</span>
+    <span>2026.04.08</span>
+    <span>·</span>
+    <span>EP #0 · Origin</span>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- 주문 교실 -->
+<section class="articles-section">
+  <div class="section-header">
+    <h2>⚡ 주문 교실</h2>
+    <span>DA Lessons · 20 episodes</span>
+  </div>
+  <div class="articles-grid">
+    <a class="article-item" href="#">
+      <div class="article-num">01</div>
+      <h3>Claude Code란 무엇인가 — 첫 번째 주문</h3>
+      <p>지팡이를 처음 잡은 날.<br>주문의 기본 원리부터 첫 실행까지, 입학 첫날의 기록.</p>
+      <div class="article-meta">
+        <span class="article-tag">입문</span>
+        <span>전체 직종</span>
+      </div>
+    </a>
+    <a class="article-item" href="#">
+      <div class="article-num">02</div>
+      <h3>마법서(CLAUDE.md) 작성법</h3>
+      <p>나만의 주문서를 만들면,<br>매번 자기소개를 안 해도 돼요. "마법서에 적어두세요."</p>
+      <div class="article-meta">
+        <span class="article-tag">기초</span>
+        <span>전체 직종</span>
+      </div>
+    </a>
+    <a class="article-item" href="#">
+      <div class="article-num">03</div>
+      <h3>Accio 위험조항! — 계약서 검토 주문</h3>
+      <p>200페이지 계약서에서 위험 조항을 30초 만에 소환.<br>머글 시절엔 이틀 걸렸어요.</p>
+      <div class="article-meta">
+        <span class="article-tag">실전</span>
+        <span>변호사</span>
+      </div>
+    </a>
+    <a class="article-item" href="#">
+      <div class="article-num">04</div>
+      <h3>진료 기록 요약 — 30분을 30초로</h3>
+      <p>오전 외래 끝나고 쌓인 기록.<br>"확인 안 하면 잠이 안 와요" — 검증된 주문만.</p>
+      <div class="article-meta">
+        <span class="article-tag">실전</span>
+        <span>의사</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- 업무 일기 -->
+<section class="articles-section">
+  <div class="section-header">
+    <h2>🪶 업무 일기</h2>
+    <span>Quill Notes · 23 episodes</span>
+  </div>
+  <div class="articles-grid">
+    <a class="article-item" href="#">
+      <div class="article-num">00</div>
+      <h3>마법사, 전학 오다 🪄</h3>
+      <p>호그와트에서 머글 세계로 전학 온 마법사의 첫날.<br>50명의 머글 마법사를 만나다.</p>
+      <div class="article-meta">
+        <span>2026.04.08</span>
+        <span>·</span>
+        <span>Origin</span>
+      </div>
+    </a>
+    <a class="article-item" href="#">
+      <div class="article-num">01</div>
+      <h3>첫 소싱 — 지팡이에 불꽃이 튀다</h3>
+      <p>첫 자동 주문이 성공한 날.<br>교과서에는 없던 실전 교훈들.</p>
+      <div class="article-meta">
+        <span>2026.04.09</span>
+        <span>·</span>
+        <span>자동화</span>
+      </div>
+    </a>
+    <a class="article-item" href="#">
+      <div class="article-num">02</div>
+      <h3>폴리주스 약을 잘못 넣은 날</h3>
+      <p>Reparo. 부러진 지팡이도 고치면 되듯이,<br>오류도 고치면 돼요. 🔧</p>
+      <div class="article-meta">
+        <span>2026.04.10</span>
+        <span>·</span>
+        <span>트러블슈팅</span>
+      </div>
+    </a>
+    <a class="article-item" href="#">
+      <div class="article-num">03</div>
+      <h3>부엉이 우편 시스템 구축기</h3>
+      <p>6개 채널에 톤을 맞춰 콘텐츠를 배달하는<br>시스템을 만들었어요.</p>
+      <div class="article-meta">
+        <span>2026.04.11</span>
+        <span>·</span>
+        <span>운영</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter">
+  <div class="newsletter-inner">
+    <div class="nl-icon">🦉</div>
+    <div>
+      <h3>부엉이 우편</h3>
+      <p>매일 아침, 전문직을 위한 AI 주문 하나가 배달됩니다.<br>"이걸 왜 진작 안 알려줬어?" — 그런 주문만 골라요.</p>
+      <div class="nl-form">
+        <input type="email" placeholder="이메일 주소">
+        <button>구독하기</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>Hermione's Library — 헤르미온느의 도서관 📚</p>
+  <p style="margin-top: 8px;">Powered by <a href="#">ARK Point</a></p>
+</footer>
+
+</div>
+</body>
+</html>

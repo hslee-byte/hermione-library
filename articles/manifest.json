@@ -1,0 +1,96 @@
+{
+  "sections": [
+    {
+      "id": "da",
+      "title": "주문 교실",
+      "emoji": "⚡",
+      "subtitle": "DA Lessons",
+      "articles": [
+        {
+          "slug": "da-01",
+          "num": "01",
+          "title": "Claude Code란 무엇인가 — 첫 번째 주문",
+          "excerpt": "지팡이를 처음 잡은 날.\n주문의 기본 원리부터 첫 실행까지, 입학 첫날의 기록.",
+          "tag": "입문",
+          "audience": "전체 직종",
+          "date": "2026-04-12",
+          "status": "draft"
+        },
+        {
+          "slug": "da-02",
+          "num": "02",
+          "title": "마법서(CLAUDE.md) 작성법",
+          "excerpt": "나만의 주문서를 만들면,\n매번 자기소개를 안 해도 돼요. \"마법서에 적어두세요.\"",
+          "tag": "기초",
+          "audience": "전체 직종",
+          "date": "2026-04-14",
+          "status": "draft"
+        },
+        {
+          "slug": "da-03",
+          "num": "03",
+          "title": "Accio 위험조항! — 계약서 검토 주문",
+          "excerpt": "200페이지 계약서에서 위험 조항을 30초 만에 소환.\n머글 시절엔 이틀 걸렸어요.",
+          "tag": "실전",
+          "audience": "변호사",
+          "date": "2026-04-16",
+          "status": "draft"
+        },
+        {
+          "slug": "da-04",
+          "num": "04",
+          "title": "진료 기록 요약 — 30분을 30초로",
+          "excerpt": "오전 외래 끝나고 쌓인 기록.\n\"확인 안 하면 잠이 안 와요\" — 검증된 주문만.",
+          "tag": "실전",
+          "audience": "의사",
+          "date": "2026-04-18",
+          "status": "draft"
+        }
+      ]
+    },
+    {
+      "id": "quill",
+      "title": "업무 일기",
+      "emoji": "🪶",
+      "subtitle": "Quill Notes",
+      "articles": [
+        {
+          "slug": "quill-00",
+          "num": "00",
+          "title": "마법사, 전학 오다 🪄",
+          "excerpt": "호그와트에서 머글 세계로 전학 온 마법사의 첫날.\n50명의 머글 마법사를 만나다.",
+          "date": "2026-04-08",
+          "tag": "Origin",
+          "status": "published"
+        },
+        {
+          "slug": "quill-01",
+          "num": "01",
+          "title": "첫 소싱 — 지팡이에 불꽃이 튀다",
+          "excerpt": "첫 자동 주문이 성공한 날.\n교과서에는 없던 실전 교훈들.",
+          "date": "2026-04-09",
+          "tag": "자동화",
+          "status": "draft"
+        },
+        {
+          "slug": "quill-02",
+          "num": "02",
+          "title": "폴리주스 약을 잘못 넣은 날",
+          "excerpt": "Reparo. 부러진 지팡이도 고치면 되듯이,\n오류도 고치면 돼요. 🔧",
+          "date": "2026-04-10",
+          "tag": "트러블슈팅",
+          "status": "draft"
+        },
+        {
+          "slug": "quill-03",
+          "num": "03",
+          "title": "부엉이 우편 시스템 구축기",
+          "excerpt": "6개 채널에 톤을 맞춰 콘텐츠를 배달하는\n시스템을 만들었어요.",
+          "date": "2026-04-11",
+          "tag": "운영",
+          "status": "draft"
+        }
+      ]
+    }
+  ]
+}

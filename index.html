@@ -404,6 +404,21 @@
     border-radius: 2px;
   }
 
+  .article-draft {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .draft-badge {
+    padding: 3px 8px;
+    background: var(--border);
+    color: var(--ink-light);
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 2px;
+    margin-left: auto;
+  }
+
   /* ===== Newsletter ===== */
   .newsletter {
     max-width: 1080px;
@@ -561,8 +576,8 @@
   </div>
   <nav class="header-nav">
     <a href="#" class="active">📚 도서관 로비</a>
-    <a href="#">⚡ 주문 교실</a>
-    <a href="#">🪶 업무 일기</a>
+    <a href="#da">⚡ 주문 교실</a>
+    <a href="#quill">🪶 업무 일기</a>
     <a href="#">🔓 입학 안내</a>
     <a href="#">🦉 부엉이 우편</a>
   </nav>
@@ -610,101 +625,23 @@
 <div class="divider"><hr></div>
 
 <!-- 주문 교실 -->
-<section class="articles-section">
+<section class="articles-section" id="da">
   <div class="section-header">
     <h2>⚡ 주문 교실</h2>
-    <span>DA Lessons · 20 episodes</span>
+    <span id="da-count">DA Lessons</span>
   </div>
-  <div class="articles-grid">
-    <a class="article-item" href="#">
-      <div class="article-num">01</div>
-      <h3>Claude Code란 무엇인가 — 첫 번째 주문</h3>
-      <p>지팡이를 처음 잡은 날.<br>주문의 기본 원리부터 첫 실행까지, 입학 첫날의 기록.</p>
-      <div class="article-meta">
-        <span class="article-tag">입문</span>
-        <span>전체 직종</span>
-      </div>
-    </a>
-    <a class="article-item" href="#">
-      <div class="article-num">02</div>
-      <h3>마법서(CLAUDE.md) 작성법</h3>
-      <p>나만의 주문서를 만들면,<br>매번 자기소개를 안 해도 돼요. "마법서에 적어두세요."</p>
-      <div class="article-meta">
-        <span class="article-tag">기초</span>
-        <span>전체 직종</span>
-      </div>
-    </a>
-    <a class="article-item" href="#">
-      <div class="article-num">03</div>
-      <h3>Accio 위험조항! — 계약서 검토 주문</h3>
-      <p>200페이지 계약서에서 위험 조항을 30초 만에 소환.<br>머글 시절엔 이틀 걸렸어요.</p>
-      <div class="article-meta">
-        <span class="article-tag">실전</span>
-        <span>변호사</span>
-      </div>
-    </a>
-    <a class="article-item" href="#">
-      <div class="article-num">04</div>
-      <h3>진료 기록 요약 — 30분을 30초로</h3>
-      <p>오전 외래 끝나고 쌓인 기록.<br>"확인 안 하면 잠이 안 와요" — 검증된 주문만.</p>
-      <div class="article-meta">
-        <span class="article-tag">실전</span>
-        <span>의사</span>
-      </div>
-    </a>
-  </div>
+  <div class="articles-grid" id="da-grid"></div>
 </section>
 
 <div class="divider"><hr></div>
 
 <!-- 업무 일기 -->
-<section class="articles-section">
+<section class="articles-section" id="quill">
   <div class="section-header">
     <h2>🪶 업무 일기</h2>
-    <span>Quill Notes · 23 episodes</span>
+    <span id="quill-count">Quill Notes</span>
   </div>
-  <div class="articles-grid">
-    <a class="article-item" href="#">
-      <div class="article-num">00</div>
-      <h3>마법사, 전학 오다 🪄</h3>
-      <p>호그와트에서 머글 세계로 전학 온 마법사의 첫날.<br>50명의 머글 마법사를 만나다.</p>
-      <div class="article-meta">
-        <span>2026.04.08</span>
-        <span>·</span>
-        <span>Origin</span>
-      </div>
-    </a>
-    <a class="article-item" href="#">
-      <div class="article-num">01</div>
-      <h3>첫 소싱 — 지팡이에 불꽃이 튀다</h3>
-      <p>첫 자동 주문이 성공한 날.<br>교과서에는 없던 실전 교훈들.</p>
-      <div class="article-meta">
-        <span>2026.04.09</span>
-        <span>·</span>
-        <span>자동화</span>
-      </div>
-    </a>
-    <a class="article-item" href="#">
-      <div class="article-num">02</div>
-      <h3>폴리주스 약을 잘못 넣은 날</h3>
-      <p>Reparo. 부러진 지팡이도 고치면 되듯이,<br>오류도 고치면 돼요. 🔧</p>
-      <div class="article-meta">
-        <span>2026.04.10</span>
-        <span>·</span>
-        <span>트러블슈팅</span>
-      </div>
-    </a>
-    <a class="article-item" href="#">
-      <div class="article-num">03</div>
-      <h3>부엉이 우편 시스템 구축기</h3>
-      <p>6개 채널에 톤을 맞춰 콘텐츠를 배달하는<br>시스템을 만들었어요.</p>
-      <div class="article-meta">
-        <span>2026.04.11</span>
-        <span>·</span>
-        <span>운영</span>
-      </div>
-    </a>
-  </div>
+  <div class="articles-grid" id="quill-grid"></div>
 </section>
 
 <!-- Newsletter -->
@@ -729,5 +666,7 @@
 </footer>
 
 </div>
+
+<script src="js/router.js"></script>
 </body>
 </html>

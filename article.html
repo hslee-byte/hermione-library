@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermione's Library</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --bg-white: #fffcf5;
+    --bg-dark: #1c1917;
+    --ink: #1c1917;
+    --ink-secondary: #57534e;
+    --ink-light: #a8a29e;
+    --maroon: #7c2d12;
+    --maroon-light: #fce7da;
+    --gold: #b45309;
+    --gold-bg: #fef3c7;
+    --cream: #fef7ed;
+    --border: #d6d3ce;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Particles */
+  .particles { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .particle { position: absolute; width: 3px; height: 3px; background: #d4a853; border-radius: 50%; opacity: 0; animation: drift linear infinite; }
+  @keyframes drift { 0% { opacity:0; transform: translateY(100vh); } 15% { opacity:0.3; } 85% { opacity:0.12; } 100% { opacity:0; transform: translateY(-20px) translateX(30px); } }
+  .particle:nth-child(1) { left:8%; animation-duration:20s; }
+  .particle:nth-child(2) { left:25%; animation-duration:26s; animation-delay:5s; }
+  .particle:nth-child(3) { left:48%; animation-duration:22s; animation-delay:9s; width:2px; height:2px; }
+  .particle:nth-child(4) { left:68%; animation-duration:28s; animation-delay:3s; }
+  .particle:nth-child(5) { left:85%; animation-duration:24s; animation-delay:7s; width:2px; height:2px; }
+
+  .wrapper { position: relative; z-index: 1; }
+
+  /* Top Bar */
+  .topbar { background: var(--bg-dark); color: #d6d3ce; text-align: center; padding: 10px 2rem; font-size: 13px; }
+  .topbar a { color: var(--gold); text-decoration: none; font-weight: 600; }
+
+  /* Header */
+  header { background: var(--bg-white); border-bottom: 2px solid var(--ink); }
+  .header-brand { max-width: 1080px; margin: 0 auto; text-align: center; padding: 36px 2rem 22px; border-bottom: 1px solid var(--border); }
+  .masthead { font-family: 'Libre Baskerville', Georgia, serif; font-size: 42px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
+  .masthead a { color: inherit; text-decoration: none; }
+  .masthead-sub { font-size: 13px; color: var(--ink-light); margin-top: 8px; letter-spacing: 3px; text-transform: uppercase; }
+  .header-nav { max-width: 1080px; margin: 0 auto; display: flex; justify-content: center; }
+  .header-nav a { color: var(--ink-secondary); text-decoration: none; padding: 14px 28px; font-size: 15px; font-weight: 500; letter-spacing: -0.01em; transition: all 0.15s; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+  .header-nav a:hover { color: var(--maroon); }
+  .header-nav a.active { color: var(--maroon); border-bottom-color: var(--maroon); }
+
+  /* Breadcrumb */
+  .breadcrumb {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 2rem 0;
+    font-size: 13px;
+    color: var(--ink-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .breadcrumb a { color: var(--ink-secondary); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--maroon); }
+  .breadcrumb .current { color: var(--ink); font-weight: 500; }
+
+  /* Article Meta */
+  .article-meta-bar {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 20px 2rem 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--ink-light);
+  }
+
+  .article-tag {
+    padding: 4px 12px;
+    background: var(--maroon-light);
+    color: var(--maroon);
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 2px;
+  }
+
+  /* Article Body */
+  .article-body {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 2rem 64px;
+  }
+
+  .article-body h1 {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 32px;
+    color: var(--ink);
+    letter-spacing: -0.025em;
+  }
+
+  .article-body h2 {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+
+  .article-body h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 36px;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .article-body p {
+    font-size: 17px;
+    color: var(--ink-secondary);
+    line-height: 1.85;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .article-body strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .article-body blockquote {
+    margin: 24px 0;
+    padding: 16px 24px;
+    border-left: 3px solid var(--maroon);
+    background: var(--cream);
+    font-size: 17px;
+    color: var(--ink-secondary);
+    line-height: 1.8;
+  }
+
+  .article-body blockquote p {
+    margin-bottom: 0;
+  }
+
+  .article-body ul, .article-body ol {
+    margin: 16px 0;
+    padding-left: 24px;
+    font-size: 17px;
+    color: var(--ink-secondary);
+    line-height: 1.85;
+  }
+
+  .article-body li {
+    margin-bottom: 8px;
+  }
+
+  .article-body code {
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+    font-size: 14px;
+    background: var(--cream);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--maroon);
+  }
+
+  .article-body pre {
+    margin: 24px 0;
+    padding: 24px;
+    background: var(--bg-dark);
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+
+  .article-body pre code {
+    background: none;
+    color: #e7e5e4;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .article-body hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 15px;
+  }
+
+  .article-body th {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 2px solid var(--ink);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  .article-body td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-secondary);
+  }
+
+  .article-body a {
+    color: var(--maroon);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s;
+  }
+
+  .article-body a:hover {
+    border-bottom-color: var(--maroon);
+  }
+
+  .article-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 24px 0;
+  }
+
+  /* Article Nav */
+  .article-nav {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem 64px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 16px;
+    border-top: 2px solid var(--ink);
+    padding-top: 32px;
+  }
+
+  .nav-prev { text-align: left; }
+  .nav-home { text-align: center; }
+  .nav-next { text-align: right; }
+
+  .article-nav a {
+    color: var(--ink-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+
+  .article-nav a:hover { color: var(--maroon); }
+
+  /* Footer */
+  footer { background: var(--bg-white); border-top: 2px solid var(--ink); padding: 28px 2rem; text-align: center; font-size: 13px; color: var(--ink-light); }
+  footer a { color: var(--ink-secondary); text-decoration: none; }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .masthead { font-size: 30px; }
+    .header-nav { overflow-x: auto; justify-content: flex-start; padding: 0 1rem; }
+    .header-nav a { padding: 12px 16px; white-space: nowrap; font-size: 14px; }
+    .article-body { padding: 24px 1.5rem 48px; }
+    .article-body h1 { font-size: 28px; }
+    .article-body h2 { font-size: 22px; }
+    .article-nav { grid-template-columns: 1fr; text-align: center !important; }
+    .nav-prev, .nav-next, .nav-home { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="particles">
+  <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+</div>
+
+<div class="wrapper">
+
+<div class="topbar">
+  🦉 매일 아침, 전문직을 위한 AI 주문 하나가 배달됩니다 — <a href="#">부엉이 우편 구독 →</a>
+</div>
+
+<header>
+  <div class="header-brand">
+    <div class="masthead"><a href="index.html">Hermione's Library</a></div>
+    <div class="masthead-sub">헤르미온느의 도서관 · Since 2026</div>
+  </div>
+  <nav class="header-nav">
+    <a href="index.html">📚 도서관 로비</a>
+    <a href="index.html#da">⚡ 주문 교실</a>
+    <a href="index.html#quill">🪶 업무 일기</a>
+    <a href="#">🔓 입학 안내</a>
+    <a href="#">🦉 부엉이 우편</a>
+  </nav>
+</header>
+
+<nav class="breadcrumb" id="article-breadcrumb">
+  <a href="index.html">📚 도서관 로비</a>
+  <span>›</span>
+  <span>로딩 중...</span>
+</nav>
+
+<div class="article-meta-bar" id="article-meta"></div>
+
+<article class="article-body" id="article-content">
+  <div style="text-align:center; padding: 80px 0; color: var(--ink-light);">
+    📖 불을 켜는 중... Lumos!
+  </div>
+</article>
+
+<nav class="article-nav" id="article-nav"></nav>
+
+<footer>
+  <p>Hermione's Library — 헤르미온느의 도서관 📚</p>
+  <p style="margin-top: 8px;">Powered by <a href="#">ARK Point</a></p>
+</footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="js/router.js"></script>
+</body>
+</html>

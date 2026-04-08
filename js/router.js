@@ -170,6 +170,12 @@ const Library = {
       contentEl.innerHTML = marked.parse(body);
     }
 
+    // Convert ☐/☑ to interactive checkboxes (localStorage)
+    this.initCheckboxes(slug, contentEl);
+
+    // Add giscus comments
+    this.initComments();
+
     // Render prev/next
     const { prev, next } = this.getPrevNext(slug);
     const navEl = document.getElementById('article-nav');
@@ -185,6 +191,89 @@ const Library = {
           ${next ? `<a href="article.html?slug=${next.slug}">${next.title} →</a>` : ''}
         </div>
       `;
+    }
+  },
+
+  // ===== CHECKBOXES =====
+  initCheckboxes(slug, container) {
+    const storageKey = `hermione-hw-${slug}`;
+    const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+
+    // Find all ☐ and ☑ in table cells and replace with real checkboxes
+    container.querySelectorAll('td').forEach(td => {
+      const text = td.textContent.trim();
+      if (text === '☐' || text === '☑') {
+        const idx = td.closest('tr').rowIndex;
+        const checked = saved[idx] || false;
+
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = checked;
+        cb.style.cssText = 'width:18px; height:18px; cursor:pointer; accent-color:#7c2d12;';
+        cb.addEventListener('change', () => {
+          saved[idx] = cb.checked;
+          localStorage.setItem(storageKey, JSON.stringify(saved));
+          // Strike-through the row text when checked
+          const row = cb.closest('tr');
+          if (row) {
+            row.querySelectorAll('td:not(:last-child)').forEach(cell => {
+              cell.style.textDecoration = cb.checked ? 'line-through' : 'none';
+              cell.style.opacity = cb.checked ? '0.5' : '1';
+            });
+          }
+        });
+
+        td.textContent = '';
+        td.style.textAlign = 'center';
+        td.appendChild(cb);
+
+        // Apply saved state styling
+        if (checked) {
+          const row = td.closest('tr');
+          if (row) {
+            row.querySelectorAll('td:not(:last-child)').forEach(cell => {
+              cell.style.textDecoration = 'line-through';
+              cell.style.opacity = '0.5';
+            });
+          }
+        }
+      }
+    });
+  },
+
+  // ===== GISCUS COMMENTS =====
+  initComments() {
+    const commentSection = document.createElement('div');
+    commentSection.style.cssText = 'max-width:780px; margin:0 auto; padding:0 2rem 64px;';
+    commentSection.innerHTML = `
+      <div style="border-top:2px solid var(--ink); padding-top:32px; margin-bottom:24px;">
+        <h2 style="font-size:22px; font-weight:700; margin-bottom:8px;">🙋‍♀️ 손들고 결과 공유하기</h2>
+        <p style="font-size:15px; color:var(--ink-secondary);">해보신 분, 댓글로 알려주세요. GitHub 계정으로 로그인하면 댓글을 남길 수 있어요.</p>
+      </div>
+    `;
+
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', 'hslee-byte/hermione-library');
+    script.setAttribute('data-repo-id', 'R_kgDOR9CaJg');
+    script.setAttribute('data-category', 'General');
+    script.setAttribute('data-category-id', 'DIC_kwDOR9CaJs4C6YO2');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'light');
+    script.setAttribute('data-lang', 'ko');
+    script.setAttribute('crossorigin', 'anonymous');
+    script.async = true;
+
+    commentSection.appendChild(script);
+
+    // Insert before the article-nav
+    const navEl = document.getElementById('article-nav');
+    if (navEl) {
+      navEl.parentNode.insertBefore(commentSection, navEl);
     }
   },
 

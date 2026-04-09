@@ -6,7 +6,7 @@
 const SUPABASE_URL = 'https://bdgjwidsylevgkgruonm.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJkZ2p3aWRzeWxldmdrZ3J1b25tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2Njg4NjAsImV4cCI6MjA5MTI0NDg2MH0.7kmi9Q3AiB--OgxS3GggbFMi0RuPWlPU-XrYxs_mhuc';
 
-let supabase = null;
+let sb = null; // Supabase client instance (avoid name clash with CDN's global `supabase`)
 
 const Library = {
   manifestUrl: 'articles/manifest.json',
@@ -247,8 +247,8 @@ const Library = {
   // ===== SUPABASE COMMENTS =====
   async initComments(slug) {
     // Check auth state
-    if (supabase) {
-      const { data: { session } } = await supabase.auth.getSession();
+    if (sb) {
+      const { data: { session } } = await sb.auth.getSession();
       if (session) {
         const u = session.user;
         this.currentUser = {
@@ -295,7 +295,7 @@ const Library = {
         </div>
       `;
       document.getElementById('logout-btn')?.addEventListener('click', async () => {
-        await supabase.auth.signOut();
+        await sb.auth.signOut();
         this.currentUser = null;
         this.renderAuth();
         this.renderCommentInput(new URLSearchParams(window.location.search).get('slug'));
@@ -308,7 +308,7 @@ const Library = {
         </button>
       `;
       document.getElementById('google-login-btn')?.addEventListener('click', async () => {
-        await supabase.auth.signInWithOAuth({
+        await sb.auth.signInWithOAuth({
           provider: 'google',
           options: { redirectTo: window.location.href }
         });
@@ -341,7 +341,7 @@ const Library = {
       btn.disabled = true;
       btn.textContent = '전송 중...';
 
-      const { error } = await supabase.from('comments').insert({
+      const { error } = await sb.from('comments').insert({
         article_slug: slug,
         user_id: this.currentUser.id,
         user_name: this.currentUser.name,
@@ -364,9 +364,9 @@ const Library = {
 
   async loadComments(slug) {
     const el = document.getElementById('comment-list');
-    if (!el || !supabase) return;
+    if (!el || !sb) return;
 
-    const { data, error } = await supabase
+    const { data, error } = await sb
       .from('comments')
       .select('*')
       .eq('article_slug', slug)
@@ -402,20 +402,20 @@ const Library = {
 
   async deleteComment(id, slug) {
     if (!confirm('댓글을 삭제할까요?')) return;
-    await supabase.from('comments').delete().eq('id', id);
+    await sb.from('comments').delete().eq('id', id);
     this.loadComments(slug);
   },
 
   // Auto-detect page and init
   init() {
     // Init Supabase client (CDN must be loaded by now via DOMContentLoaded)
-    if (!supabase && window.supabase) {
-      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    if (!sb && window.supabase) {
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
     }
 
     // Handle OAuth redirect (Supabase returns tokens in hash)
-    if (supabase && window.location.hash.includes('access_token')) {
-      supabase.auth.getSession().then(() => {
+    if (sb && window.location.hash.includes('access_token')) {
+      sb.auth.getSession().then(() => {
         // Remove hash and reload cleanly
         const cleanUrl = window.location.href.split('#')[0];
         window.history.replaceState(null, '', cleanUrl);

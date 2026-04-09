@@ -4,8 +4,19 @@
       "id": "da",
       "title": "주문 교실",
       "emoji": "⚡",
-      "subtitle": "Spell Class",
+      "subtitle": "Hogwarts Spell Class",
       "articles": [
+        {
+          "slug": "_spell-guide",
+          "num": "📜",
+          "title": "주요 AI 25개 공식 가이드 통합 — 주문 문구 완벽 가이드 🪄",
+          "excerpt": "GPT, Claude, Gemini, Copilot 공식 가이드를 한 장에.\n4대 핵심 요소 + 10가지 실전 사례 + 플랫폼별 팁 + AI 기능 조직도.",
+          "tag": "📜 번외",
+          "audience": "전체 직종",
+          "date": "2026-04-09",
+          "status": "published",
+          "href": "cheatsheet/hermione-spell-guide.html"
+        },
         {
           "slug": "da-01",
           "num": "01",

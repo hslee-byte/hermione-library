@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 25개 공식 가이드 통합 — 주문 문구 완벽 가이드 | Hermione's Library</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --parchment: #f5f0e8;
+    --card: #fffcf5;
+    --ink: #1c1917;
+    --maroon: #7c2d12;
+    --gold: #b45309;
+    --border: #d6d3ce;
+    --muted: #a8a29e;
+    --light-gold: #fef3c7;
+    --light-maroon: #fef2f2;
+    --light-green: #f0fdf4;
+  }
+
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ink);
+    background: #e8e4dc;
+    letter-spacing: -0.02em;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    width: 1280px;
+    height: 720px;
+    position: relative;
+    overflow: hidden;
+    padding: 48px;
+    page-break-after: always;
+    background: var(--parchment);
+    margin: 20px auto;
+  }
+
+  .page-header {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0;
+  }
+
+  .page-num {
+    position: absolute;
+    bottom: 24px;
+    right: 32px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  h1, h2, h3 {
+    font-family: 'Libre Baskerville', 'Pretendard', serif;
+    font-weight: 700;
+  }
+
+  .page-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 22px;
+    color: var(--maroon);
+    margin-bottom: 20px;
+    letter-spacing: 0;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .callout {
+    background: var(--light-gold);
+    border: 1px solid #fbbf24;
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  .callout-maroon {
+    background: var(--light-maroon);
+    border: 1px solid #fca5a5;
+  }
+
+  .accent { color: var(--maroon); font-weight: 600; }
+  .gold { color: var(--gold); }
+  .muted { color: var(--muted); }
+
+  code, .mono {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    background: var(--card);
+    color: var(--maroon);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--maroon);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0;
+  }
+
+  .tag-green {
+    background: #166534;
+  }
+
+  @media print {
+    body { background: none; }
+    .page { margin: 0; box-shadow: none; }
+  }
+
+  /* ---- Page 1 ---- */
+  .cover-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 36px;
+    color: var(--maroon);
+    line-height: 1.3;
+    letter-spacing: 0;
+  }
+  .cover-subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .grid-2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .element-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .element-card h3 {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--maroon);
+    margin-bottom: 6px;
+  }
+  .element-card p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: #44403c;
+  }
+  .element-card .example {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    border-left: 2px solid var(--gold);
+    padding-left: 10px;
+  }
+
+  /* ---- Page 2 ---- */
+  .ba-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    height: calc(100% - 120px);
+  }
+  .ba-card {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .ba-card.before { border: 2px solid #ef4444; }
+  .ba-card.after { border: 2px solid #22c55e; }
+  .ba-label {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .ba-label.red { color: #ef4444; }
+  .ba-label.green { color: #22c55e; }
+
+  /* ---- Page 3-4 ---- */
+  .use-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .use-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .use-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--maroon);
+    margin-bottom: 6px;
+  }
+  .use-card p, .use-card .tip {
+    font-size: 12px;
+    line-height: 1.55;
+    color: #44403c;
+  }
+  .use-card .tip {
+    margin-top: 8px;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* ---- Page 5 ---- */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .tech-section h3 {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--maroon);
+    margin-bottom: 12px;
+  }
+  .tech-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .tech-item h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .tech-item p {
+    font-size: 12px;
+    color: #44403c;
+    line-height: 1.5;
+  }
+
+  /* ---- Page 6 ---- */
+  .claude-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .claude-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .claude-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--maroon);
+    margin-bottom: 8px;
+  }
+  .claude-card p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: #44403c;
+  }
+
+  /* ---- Page 7 ---- */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .tool-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .tool-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .tool-card p, .tool-card li {
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: #44403c;
+  }
+  .tool-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .tool-card ul li {
+    padding: 3px 0;
+    border-bottom: 1px solid #f5f0e8;
+  }
+  .tool-card ul li:last-child { border-bottom: none; }
+
+  /* ---- Page 8-9 ---- */
+  .dept-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .dept-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .dept-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .dept-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--maroon);
+    margin-bottom: 6px;
+  }
+  .dept-card p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #44403c;
+  }
+  .dept-card .analogy {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* ---- Page 10 ---- */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .summary-table th {
+    background: var(--maroon);
+    color: #fff;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .summary-table th:first-child { border-radius: 8px 0 0 0; }
+  .summary-table th:last-child { border-radius: 0 8px 0 0; }
+  .summary-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: #44403c;
+  }
+  .summary-table tr:nth-child(even) td {
+    background: var(--card);
+  }
+  .summary-table tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+  .summary-table tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+
+  /* ---- Page 11 ---- */
+  .finale-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+  }
+  .finale-quote {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 24px;
+    color: var(--maroon);
+    line-height: 1.6;
+    max-width: 700px;
+    margin-bottom: 8px;
+    letter-spacing: 0;
+  }
+  .finale-attribution {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
+  .qr-placeholder {
+    width: 120px;
+    height: 120px;
+    background: #e7e5e4;
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 28px;
+    margin: 16px auto;
+  }
+
+  /* org chart */
+  .org-chart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .org-node {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .org-node.center {
+    background: var(--maroon);
+    color: #fff;
+    border-color: var(--maroon);
+  }
+  .org-arrow {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* bottom bar items */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .bottom-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .bottom-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .bottom-card p, .bottom-card li {
+    font-size: 12px;
+    line-height: 1.55;
+    color: #44403c;
+  }
+  .bottom-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .bottom-card ul li {
+    padding: 2px 0;
+  }
+
+  /* use-grid-5 for page 4 */
+  .use-grid-5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ======================== PAGE 1 — 표지 ======================== -->
+<div class="page" id="page-1">
+  <div class="page-header">📚 Hermione's Library · hermione-library.vercel.app</div>
+  <div class="page-num">1 / 11</div>
+
+  <div style="margin-top: 24px; margin-bottom: 28px;">
+    <div class="cover-title">📚 AI 25개 공식 가이드 통합<br>주문 문구(프롬프트) 완벽 가이드</div>
+    <div class="cover-subtitle">전문가를 위한 AI 주문 작성법 · Hermione's Spell Guide</div>
+  </div>
+
+  <div class="grid-2x2">
+    <div class="element-card">
+      <h3>🧙 역할 (마법서 / Persona)</h3>
+      <p>"당신은 ~입니다" — AI가 전문가처럼 답변하도록 역할을 부여합니다.</p>
+      <div class="example">예: "당신은 10년 경력의 수석 마케팅 전략가입니다."</div>
+    </div>
+    <div class="element-card">
+      <h3>🎯 작업/목표 (주문 / Task)</h3>
+      <p>구체적인 행동과 기대하는 결과물을 명확하게 지시합니다.</p>
+      <div class="example">예: "인스타 릴스용 15초 광고 스크립트 3개를 작성해주세요."</div>
+    </div>
+    <div class="element-card">
+      <h3>📋 맥락 (배경 / Context)</h3>
+      <p>왜, 누구를 위해, 어떤 제약조건이 있는지 배경을 설명합니다.</p>
+      <div class="example">예: "타깃: 20대 대학생 / 예산: 5천만원"</div>
+    </div>
+    <div class="element-card">
+      <h3>📐 형식/기대치 (결과물 / Format)</h3>
+      <p>표, 목록, 길이, 톤 등 결과물의 형태를 지정합니다.</p>
+      <div class="example">예: "표 형식으로 정리해주세요."</div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top: 24px; text-align: center; font-size: 15px;">
+    💡 "It's levi<strong>O</strong>sa, not levio<strong>SA</strong>" — 주문 문구가 정확해야 효과가 나요 🪶
+  </div>
+</div>
+
+<!-- ======================== PAGE 2 — Before/After ======================== -->
+<div class="page" id="page-2">
+  <div class="page-header">📚 Hermione's Library · hermione-library.vercel.app</div>
+  <div class="page-num">2 / 11</div>
+
+  <div class="page-title">✨ 완성형 주문 Before / After</div>
+
+  <div class="ba-grid">
+    <div class="ba-card before">
+      <div class="ba-label red">❌ Before</div>
+      <div style="background: var(--light-maroon); border-radius: 8px; padding: 16px; margin-bottom: 14px;">
+        <p style="font-size: 18px; font-weight: 600; color: #991b1b;">"마케팅 계획을 짜줘."</p>
+      </div>
+      <div style="flex: 1;">
+        <p style="font-size: 13px; color: #44403c; line-height: 1.7;">
+          ⚠️ 어떤 제품?<br>
+          ⚠️ 누구 대상?<br>
+          ⚠️ 어떤 채널?<br>
+          ⚠️ 예산은?<br>
+          ⚠️ 형식은?<br><br>
+          <span style="color: #ef4444; font-weight: 600;">모든 것이 불명확합니다.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="ba-card after">
+      <div class="ba-label green">✅ After</div>
+      <div style="font-size: 12.5px; line-height: 1.7; color: #44403c;">
+        <p><span class="tag">Persona</span> 당신은 10년차 수석 마케팅 전략가입니다.</p>
+        <p style="margin-top: 8px;"><span class="tag" style="background: var(--gold);">Context</span> 우리 회사는 20대 대학생을 타깃으로 하는 새로운 에너지 드링크 'Z-Boost'를 출시합니다. 예산은 5천만원이며, 주요 채널은 인스타그램입니다.</p>
+        <p style="margin-top: 8px;"><span class="tag" style="background: #2563eb;">Task</span> 인스타그램 릴스(Reels)용 15초 광고 스크립트 3개를 작성해주세요.</p>
+        <p style="margin-top: 8px;"><span class="tag tag-green">Format</span> 각 스크립트는 표 형식으로 작성하고, 시각적 묘사와 내레이션을 구분해주세요.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px;">
+    <div class="callout" style="font-size: 13px;">
+      💡 처음부터 완벽할 필요 없어요! "더 짧게", "더 전문적으로" 다듬으면 돼요
+    </div>
+    <div class="callout" style="font-size: 13px; background: var(--light-maroon); border-color: #fca5a5;">
+      🎯 <strong>성공 공식:</strong> 역할 + 맥락 + 구체적 지시 + 형식 = <strong>80% 성공!</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== PAGE 3 — 실전 사례 Part 1 ======================== -->
+<div class="page" id="page-3">
+  <div class="page-header">📚 Hermione's Library · hermione-library.vercel.app</div>
+  <div class="page-num">3 / 11</div>
+
+  <div class="page-title">📚 실전 주문 사례 Part 1</div>
+
+  <div class="use-grid" style="margin-top: 8px;">
+    <div class="use-card">
+      <h4>📂 텍스트 분류</h4>
+      <p style="font-size: 11px; color: var(--gold); margin-bottom: 6px;">Accio 분류!</p>
+      <p>감정분석, 스팸필터, 카테고리 분류</p>
+      <div style="margin-top: 10px; background: var(--parchment); border-radius: 6px; padding: 10px;">
+        <p style="font-size: 11px; color: var(--muted); margin-bottom: 4px;">예시</p>
+        <p style="font-size: 12px;">리뷰 감정 분류<br>(긍정 / 부정 / 중립)</p>
+      </div>
+      <div class="tip">💡 선택지 명확히 제시, XML 태그로 구조화</div>
+    </div>
+
+    <div class="use-card">
+      <h4>❓ 질의응답</h4>
+      <p style="font-size: 11px; color: var(--gold); margin-bottom: 6px;">Accio 답변!</p>
+      <p>문서 기반 답변, FAQ, 검색</p>
+      <div style="margin-top: 10px; background: var(--parchment); border-radius: 6px; padding: 10px;">
+        <p style="font-size: 11px; color: var(--muted); margin-bottom: 4px;">Claude 권장</p>
+        <p style="font-size: 12px;"><code>&lt;document&gt;</code> 태그로 문서 구분</p>
+      </div>
+      <div class="tip">💡 문서에 없으면 "정보 없음"이라고 답하세요</div>
+    </div>
+
+    <div class="use-card">
+      <h4>✂️ 요약</h4>
+      <p style="font-size: 11px; color: var(--gold); margin-bottom: 6px;">Revelio 핵심!</p>
+      <p>회의록, 보고서, 기사 요약</p>
+      <div style="margin-top: 10px; background: var(--parchment); border-radius: 6px; padding: 10px;">
+        <p style="font-size: 11px; color: var(--muted); margin-bottom: 4px;">핵심</p>
+        <p style="font-size: 12px;">길이와 형식을 반드시 지정</p>
+      </div>
+      <div class="tip">💡 길이 명시(문장 수/글자 수), 형식 지정(글머리/문단)</div>
+    </div>
+
+    <div class="use-card">
+      <h4>✍️ 텍스트 생성</h4>
+      <p style="font-size: 11px; color: var(--gold); margin-bottom: 6px;">Accio 글!</p>
+      <p>마케팅 카피, 이메일, SNS 포스트</p>
+      <div style="margin-top: 10px; background: var(--parchment); border-radius: 6px; padding: 10px;">
+        <p style="font-size: 11px; color: var(--muted); margin-bottom: 4px;">핵심</p>
+        <p style="font-size: 12px;">4대 요소 모두 포함하기</p>
+      </div>
+      <div class="tip">💡 타깃 독자 명시, 톤 설정 필수</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== PAGE 4 — 실전 사례 Part 2 ======================== -->
+<div class="page" id="page-4">
+  <div class="page-header">📚 Hermione's Library · hermione-library.vercel.app</div>
+  <div class="page-num">4 / 11</div>
+
+  <div class="page-title">📚 실전 주문 사례 Part 2</div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px;">
+    <div class="use-card">
+      <h4>💻 코드 생성</h4>
+      <p>함수 작성, 버그 수정, 리팩토링</p>
+      <div class="tip">💡 언어/프레임워크 명시, 입출력 예시 제공, 에러 처리 요청</div>
+    </div>
+    <div class="use-card">
+      <h4>🌐 번역 & 로컬라이제이션</h4>
+      <p>문서 번역, 현지화, 다국어 콘텐츠</p>
+      <div class="tip">💡 목적/용도 명시, 톤/격식 수준 설정, 직역보다 자연스러운 표현 우선</div>
+    </div>
+    <div class="use-card">
+      <h4>🔍 개체명 인식</h4>
+      <p>인명, 지명, 날짜, 조직명 추출</p>
+      <div style="margin-top: 8px; background: var(--parchment); border-radius: 6px; padding: 8px;">
+        <p style="font-size: 11px;">예: 텍스트에서 PERSON, ORG, LOC, DATE 추출 → 유형별 분류 출력</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+    <div class="use-card">
+      <h4>📊 데이터 구조화</h4>
+      <p>비정형 → JSON, 표 변환</p>
+      <div style="margin-top: 8px; background: var(--parchment); border-radius: 6px; padding: 8px;">
+        <p style="font-size: 11px;">예: 이메일에서 날짜, 시간, 장소, 주제 추출 → JSON 변환</p>
+      </div>
+    </div>
+    <div class="use-card">
+      <h4>🔄 콘텐츠 변환</h4>
+      <p>톤 변경, 길이 조절, 스타일 변환</p>
+      <div style="margin-top: 8px; background: var(--parchment); border-radius: 6px; padding: 8px;">
+        <p style="font-size: 11px;">예: 원문을 3가지 톤으로 변환 (전문적 / 친근한 / 기술적)</p>
+      </div>
+    </div>
+    <div class="use-card">
+      <h4>🎨 창의적 작성</h4>
+      <p>스토리, 광고 시나리오, 아이디어</p>
+      <div style="margin-top: 8px; background: var(--parchment); border-radius: 6px; padding: 8px; font-size: 11px; line-height: 1.5;">
+        <span class="tag" style="font-size: 10px;">Persona</span> 바이럴 콘텐츠 전문가<br>
+        <span class="tag" style="font-size: 10px; background: #2563eb;">Task</span> 인스타 릴스 30초 대본<br>
+        <span class="tag" style="font-size: 10px; background: var(--gold);">Context</span> 대니구 킷술, MZ세대<br>
+        <span class="tag tag-green" style="font-size: 10px;">Format</span> 씬별 구분, 화면설명+대사, CTA+해시태그 5개
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== PAGE 5 — 핵심 주문 기법 ======================== -->
+<div class="page" id="page-5">
+  <div class="page-header">📚 Hermione's Library · hermione-library.vercel.app</div>
+  <div class="page-num">5 / 11</div>
+
+  <div class="page-title">🪄 핵심 주문 기법</div>
+
+  <div class="tech-grid">
+    <!-- Left column -->
+    <div class="tech-section">
+      <h3>예시 제공 방식</h3>
+      <div class="tech-item">
+        <h4>🎯 Zero-shot (바로 지시)</h4>
+        <p>예시 없이 바로 지시. 간단한 작업에 적합.</p>
+        <p style="margin-top: 6px; color: var(--muted); font-size: 11px; border-left: 2px solid var(--gold); padding-left: 8px;">예: "다음 문장의 감정을 분류해줘: 오늘 기분이 좋아요"</p>
+      </div>
+      <div class="tech-item">
+        <h4>📝 Few-shot (예시 먼저 보여주기)</h4>
+        <p>1~3개 예시 제공. 형식/스타일 일관성 확보.</p>
+        <p style="margin-top: 6px; color: var(--muted); font-size: 11px; border-left: 2px solid var(--gold); padding-left: 8px;">예: "영화: 타이타닉 → 💕🚢😭<br>영화: 어벤져스 → 🦸‍♂️💥🌍<br>영화: 기생충 → ?"</p>
+      </div>
+    </div>
+
+    <!-- Right column -->
+    <div class="tech-section">
+      <h3>사고 유도 방식</h3>
+      <div class="tech-item">
+        <h4>🔗 Chain-of-Thought (단계별 생각하게 하기)</h4>
+        <p>"단계별로 생각해봐" 또는 "Let's think step by step"</p>
+        <p style="margin-top: 4px; font-size: 11px; color: var(--gold);">수학, 논리, 복잡한 분석에 효과적</p>
+      </div>
+      <div class="tech-item">
+        <h4>🎭 역할 부여 (전문가처럼 답변하게 하기)</h4>
+        <p>"당신은 20년 차 파이썬 개발자입니다" → 전문 용어와 베스트 프랙티스 반영</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-grid" style="margin-top: 14px;">
+    <div class="bottom-card">
+      <h4>⚠️ 이것만은 피하세요!</h4>
+      <ul>
+        <li>❌ "~하지 마" 대신 "~해줘" — 부정형보다 긍정형이 정확</li>
+        <li>❌ 애매한 표현 피하기 — "짧게 써줘" → "3문장 이내로 써줘"</li>
+        <li>❌ 한 번에 너무 많이 요청 — 복잡한 건 단계별로 나눠서</li>
+        <li>✅ 결과 보고 반복 다듬기 — "더 짧게", "예시 추가해줘"</li>
+      </ul>
+    </div>
+    <div class="bottom-card">
+      <h4>⚙️ 고급 설정</h4>
+      <ul>
+        <li>🌡️ <strong>Temperature</strong><br>
+          <span style="font-size: 11px;">낮음(0.0~0.3): 분석, 코딩 → 일관된 답변<br>높음(0.7~1.0): 창작, 브레인스토밍 → 다양한 답변</span>
+        </li>
+        <li style="margin-top: 6px;">🚨 <strong>헛소리(환각) 방지</strong><br>
+          <span style="font-size: 11px;">"모르면 모른다고 해줘" "출처를 인용해줘"</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== PAGE 6 — Claude 특화 ======================== -->
+<div class="page" id="page-6">
+  <div class="page-header">📚 Hermione's Library · hermione-library.vercel.app</div>
+  <div class="page-num">6 / 11</div>
+
+  <div class="page-title">🪄 지팡이별 특화 주문법: Claude</div>
+  <p style="font-size: 15px; color: var(--gold); font-weight: 600; margin-bottom: 20px;">🟠 Anthropic Claude — 긴 문서 처리 강점</p>
+
+  <div class="claude-cards">
+    <div class="claude-card">
+      <h4>🔴 XML 태그로 구조화</h4>
+      <p>Claude는 XML 태그를 특히 잘 이해해요.</p>
+      <p style="margin-top: 10px;"><code>&lt;document&gt;</code>...<code>&lt;/document&gt;</code>, <code>&lt;question&gt;</code>...<code>&lt;/question&gt;</code> 등으로 내용을 구분하면 AI가 각 부분의 역할을 명확히 파악해요.</p>
+      <div style="margin-top: 12px; background: var(--parchment); border-radius: 6px; padding: 10px;">
+        <p style="font-size: 12px; color: var(--maroon); font-family: 'SF Mono', monospace;">&lt;text&gt;분석할 내용&lt;/text&gt;</p>
+      </div>
+    </div>
+
+    <div class="claude-card">
+      <h4>📍 지시사항은 맨 끝에</h4>
+      <p>긴 문서를 분석할 때는 문서를 먼저 제공하고, 질문이나 지시사항을 맨 마지막에 배치하세요.</p>
+      <div style="margin-top: 14px; background: var(--light-green); border-radius: 6px; padding: 10px; text-align: center;">
+        <p style="font-size: 20px; font-weight: 700; color: #166534;">오류율 36% 감소!</p>
+      </div>
+    </div>
+
+    <div class="claude-card">
+      <h4>💭 생각할 시간 주기</h4>
+      <p>"생각할 시간을 가져" 또는 <code>&lt;thinking&gt;</code> 태그를 사용하면 AI가 내부적으로 더 깊이 고민한 후 답변합니다.</p>
+      <div style="margin-top: 14px; background: var(--parchment); border-radius: 6px; padding: 10px;">
+        <p style="font-size: 12px; color: var(--maroon); font-family: 'SF Mono', monospace;">&lt;thinking&gt;...&lt;/thinking&gt;</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top: 24px; text-align: center; font-size: 15px;">
+    💡 "교과서에 나와 있어요" — Claude는 구조화된 주문에 특히 강해요 📖
+  </div>
+</div>
+
+<!-- ======================== PAGE 7 — GPT, Gemini, Copilot, Perplexity ======================== -->
+<div class="page" id="page-7">
+  <div class="page-header">📚 Hermione's Library · hermione-library.vercel.app</div>
+  <div class="page-num">7 / 11</div>
+
+  <div class="page-title">🪄 지팡이별 특화 주문법: GPT, Gemini, Copilot, Perplexity</div>
+
+  <div class="tool-grid" style="margin-top: 8px;">
+    <div class="tool-card">
+      <h4 style="color: #10a37f;">🟢 OpenAI GPT</h4>
+      <ul>
+        <li>메시지 역할 구분하기<br><span style="font-size: 10px; color: var(--muted);">system / user / assistant</span></li>
+        <li>Reasoning Effort 조절<br><span style="font-size: 10px; color: var(--muted);">high / low</span></li>
+        <li>메타 프롬프팅<br><span style="font-size: 10px; color: var(--muted);">"이 프롬프트를 더 좋은 결과를 얻도록 최적화해줘"</span></li>
+      </ul>
+    </div>
+
+    <div class="tool-card">
+      <h4 style="color: #4285f4;">🔵 Google Gemini</h4>
+      <ul>
+        <li>4대 요소 필수 포함<br><span style="font-size: 10px; color: var(--muted);">Persona, Task, Context, Format</span></li>
+        <li>@파일명으로 문서 참조</li>
+        <li>"Make this a power prompt"로 자동 개선</li>
+      </ul>
+    </div>
+
+    <div class="tool-card">
+      <h4 style="color: #0078d4;">◆ Microsoft Copilot</h4>
+      <ul>
+        <li>GCSE 프레임워크<br><span style="font-size: 10px; color: var(--muted);">Goal → Context → Source → Expectations</span></li>
+        <li>Excel 표(Table) 변환 필수</li>
+        <li>파일/이메일 직접 참조</li>
+      </ul>
+    </div>
+
+    <div class="tool-card">
+      <h4 style="color: #6366f1;">◇ Perplexity AI</h4>
+      <ul>
+        <li>Spaces로 맥락 유지</li>
+        <li>순차적 검색 지시</li>
+        <li>Labs로 복잡한 워크플로우</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top: 20px; text-align: center; font-size: 14px;">
+    💡 <strong>공통 팁:</strong> 구체적으로 말하기, 반복해서 다듬기, 복잡한 건 나눠서
+  </div>
+</div>
+
+<!-- ======================== PAGE 8 — 호그와트 배치도 Part 1 ======================== -->
+<div class="page" id="page-8">
+  <div class="page-header">📚 Hermione's Library · hermione-library.vercel.app</div>
+  <div class="page-num">8 / 11</div>
+
+  <div class="page-title">🏰 호그와트 학과별 AI 배치도 (Part 1)</div>
+  <p style="font-size: 14px; color: var(--muted); margin-bottom: 16px;">마법부(회사) 조직도로 본 AI 기능</p>
+
+  <div class="org-chart">
+    <div class="org-node">실무 작업자</div>
+    <span class="org-arrow">←</span>
+    <div class="org-node">운영/정리</div>
+    <span class="org-arrow">←</span>
+    <div class="org-node center">💬 상담창구 (PM/CS)</div>
+    <span class="org-arrow">→</span>
+    <div class="org-node">리서치팀</div>
+    <span class="org-arrow">→</span>
+    <div class="org-node">크리에이티브</div>
+  </div>
+  <div class="org-chart" style="margin-bottom: 20px;">
+    <div class="org-node">인프라/연동</div>
+    <span class="org-arrow">←</span>
+    <div class="org-node center" style="visibility: hidden;">💬 상담창구</div>
+    <span class="org-arrow" style="visibility: hidden;">→</span>
+    <div class="org-node">개발팀</div>
+  </div>
+
+  <div class="dept-grid">
+    <div class="dept-card">
+      <h4>💬 상담창구 (채팅)</h4>
+      <p>모든 요청을 받아주는 프론트 데스크. AI에게 말을 걸면 시작되는 기본 인터페이스.</p>
+      <div class="analogy">💡 비유: 회사 대표번호로 전화하면 받는 상담원</div>
+    </div>
+
+    <div class="dept-card">
+      <h4>📝 실무 작업자 (캔버스/아티팩트)</h4>
+      <p>문서/코드/미니앱을 별도 공간에서 실시간으로 다루는 작업대.</p>
+      <p style="margin-top: 6px; font-size: 11px; color: var(--muted);">ChatGPT: Canvas / Claude: Artifacts / Gemini: Canvas</p>
+      <div class="analogy">💡 비유: 회의(채팅) 끝나고 실제로 문서 쓰는 워드 화면</div>
+    </div>
+
+    <div class="dept-card">
+      <h4>📁 운영/정리 (프로젝트)</h4>
+      <p>하나의 주제별로 파일, 지시사항, 대화를 묶어두는 폴더.</p>
+      <p style="margin-top: 6px; font-size: 11px; color: var(--muted);">ChatGPT: Projects / Claude: Projects / Gemini: Gems</p>
+      <div class="analogy">💡 비유: 단톡방 + 구글드라이브 + 업무노트를 한 곳에 묶은 것</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== PAGE 9 — 호그와트 배치도 Part 2 ======================== -->
+<div class="page" id="page-9">
+  <div class="page-header">📚 Hermione's Library · hermione-library.vercel.app</div>
+  <div class="page-num">9 / 11</div>
+
+  <div class="page-title">🏰 호그와트 학과별 AI 배치도 (Part 2)</div>
+
+  <div class="dept-grid-4" style="margin-bottom: 12px;">
+    <div class="dept-card">
+      <h4>🔍 리서치팀: 웹검색</h4>
+      <p>빠른 검색, 간단한 팩트체크</p>
+      <div class="analogy">💡 비유: 네이버에 검색해서 상위 3개 글 읽고 정리해주는 것</div>
+    </div>
+    <div class="dept-card">
+      <h4>📊 리서치팀: 심층연구</h4>
+      <p>자료 50개 훑고 구조화해서 보고서 작성</p>
+      <div class="analogy">💡 비유: 리서치 인턴/애널리스트</div>
+    </div>
+    <div class="dept-card">
+      <h4>🎨 크리에이티브: 이미지</h4>
+      <p>텍스트 설명만으로 이미지 생성</p>
+      <p style="font-size: 10px; color: var(--muted); margin-top: 4px;">ChatGPT: GPT / Gemini: Nanobanana Pro</p>
+      <div class="analogy">💡 비유: 디자이너에게 "이런 느낌으로 시안 만들어줘" 요청</div>
+    </div>
+    <div class="dept-card">
+      <h4>🎬 크리에이티브: 영상</h4>
+      <p>텍스트/이미지로 짧은 영상 제작</p>
+      <p style="font-size: 10px; color: var(--muted); margin-top: 4px;">ChatGPT: Sora / Gemini: Veo3.1</p>
+    </div>
+  </div>
+
+  <div class="dept-grid-4">
+    <div class="dept-card">
+      <h4>🔗 인프라/연동 (MCP/커넥터)</h4>
+      <p>AI ↔ 외부 시스템(슬랙/DB/드라이브) 연결</p>
+      <div class="analogy">💡 비유: USB-C 허브 (노트북에 도구·데이터를 꽂아 확장)</div>
+    </div>
+    <div class="dept-card">
+      <h4>👤 인사/직무설계 (GPTs/Gems/Skills)</h4>
+      <p>역할/성격/업무규칙을 고정해 전용 직원처럼 만든 AI 템플릿</p>
+      <div class="analogy">💡 비유: 직무기술서가 붙은 전문 직원</div>
+    </div>
+    <div class="dept-card">
+      <h4>💻 개발팀 (코딩 에이전트)</h4>
+      <p>말로 시키면 코딩/수정/실행/리팩토링까지</p>
+      <p style="font-size: 10px; color: var(--muted); margin-top: 4px;">OpenAI: Codex / Claude: Claude Code / Google: Antigravity</p>
+    </div>
+    <div class="dept-card">
+      <h4>🚀 프로덕트 엔지니어</h4>
+      <p style="font-size: 11px; color: var(--muted); margin-bottom: 4px;">Gemini 고유</p>
+      <p><strong>Dynamic View:</strong> 보고서를 대시보드/UI로<br><strong>Opal:</strong> 워크플로우를 미니 앱으로 자동화</p>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== PAGE 10 — 기능 요약표 ======================== -->
+<div class="page" id="page-10">
+  <div class="page-header">📚 Hermione's Library · hermione-library.vercel.app</div>
+  <div class="page-num">10 / 11</div>
+
+  <div class="page-title">📊 지팡이별 기능 전체 요약표</div>
+
+  <table class="summary-table">
+    <thead>
+      <tr>
+        <th style="width: 10%;">팀/역할</th>
+        <th style="width: 14%;">AI 기능</th>
+        <th style="width: 17%;">ChatGPT</th>
+        <th style="width: 17%;">Claude</th>
+        <th style="width: 17%;">Gemini</th>
+        <th style="width: 25%;">초보자 비유</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>💬 상담창구</td>
+        <td>채팅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>회사 대표번호 상담원</td>
+      </tr>
+      <tr>
+        <td>📝 실무 작업자</td>
+        <td>캔버스/아티팩트</td>
+        <td>Canvas</td>
+        <td>Artifacts</td>
+        <td>Canvas</td>
+        <td>회의 후 문서 쓰는 워드 화면</td>
+      </tr>
+      <tr>
+        <td>📁 운영/정리</td>
+        <td>프로젝트</td>
+        <td>Projects</td>
+        <td>Projects</td>
+        <td>Gems</td>
+        <td>단톡방+드라이브+노트 통합</td>
+      </tr>
+      <tr>
+        <td>🔍 리서치 (빠른)</td>
+        <td>웹검색</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>네이버 검색 후 3개 글 정리</td>
+      </tr>
+      <tr>
+        <td>📊 리서치 (심층)</td>
+        <td>심층연구</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>자료 50개 훑고 PPT 목차 작성</td>
+      </tr>
+      <tr>
+        <td>🎨 크리에이티브</td>
+        <td>이미지 생성</td>
+        <td>GPT</td>
+        <td>—</td>
+        <td>Nanobanana Pro</td>
+        <td>디자이너에게 시안 요청</td>
+      </tr>
+      <tr>
+        <td>🎬 크리에이티브</td>
+        <td>영상 생성</td>
+        <td>Sora (별도 앱)</td>
+        <td>—</td>
+        <td>Veo3.1</td>
+        <td>영상팀에 10초 광고 요청</td>
+      </tr>
+      <tr>
+        <td>🔗 인프라/연동</td>
+        <td>MCP/커넥터</td>
+        <td>MCP</td>
+        <td>MCP</td>
+        <td>네이티브 연결</td>
+        <td>USB-C 허브 확장</td>
+      </tr>
+      <tr>
+        <td>👤 인사/직무설계</td>
+        <td>AI 템플릿</td>
+        <td>GPTs</td>
+        <td>Skills</td>
+        <td>Gems</td>
+        <td>직무기술서 붙은 전문 직원</td>
+      </tr>
+      <tr>
+        <td>💻 개발팀</td>
+        <td>바이브코딩</td>
+        <td>Codex</td>
+        <td>Claude Code</td>
+        <td>Antigravity (별도 앱)</td>
+        <td>말로 시키면 코딩해주는 비서</td>
+      </tr>
+      <tr>
+        <td>🚀 프로덕트</td>
+        <td>UI/자동화</td>
+        <td>—</td>
+        <td>—</td>
+        <td>Dynamic View, Opal</td>
+        <td>보고서를 대시보드/앱으로</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ======================== PAGE 11 — 마무리 ======================== -->
+<div class="page" id="page-11">
+  <div class="page-header">📚 Hermione's Library · hermione-library.vercel.app</div>
+  <div class="page-num">11 / 11</div>
+
+  <div class="finale-center">
+    <div class="finale-quote">
+      "주문은 다듬을수록 정교해져요.<br>저도 레비오사 3번 틀렸거든요 ㅎㅎ"
+    </div>
+    <div class="finale-attribution">— Hermione 📖</div>
+
+    <p style="font-size: 16px; font-weight: 600; color: var(--maroon); margin-bottom: 8px;">📚 더 많은 수업이 궁금하다면</p>
+    <p style="font-size: 18px; color: var(--gold); font-weight: 700; margin-bottom: 16px;">hermione-library.vercel.app</p>
+
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Ft.me%2FProfessional_10x&margin=8&color=7c2d12&bgcolor=f5f0e8" alt="QR Code" style="width: 120px; height: 120px; margin: 12px 0 8px; border-radius: 4px;">
+    <p style="font-size: 14px; color: var(--muted);">텔레그램: @Professional_10x</p>
+
+    <div class="callout" style="margin-top: 28px; font-size: 15px; max-width: 540px;">
+      교과서를 먼저 읽는 건 겁쟁이가 아니라 준비된 사람이에요 🪄
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

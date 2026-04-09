@@ -85,7 +85,7 @@ const Library = {
 
       gridEl.innerHTML = articles.map(a => {
         const isPublished = a.status === 'published';
-        const href = isPublished ? `article.html?slug=${a.slug}` : '#';
+        const href = isPublished ? (a.href || `article.html?slug=${a.slug}`) : '#';
         const draftClass = isPublished ? '' : ' article-draft';
         const excerptHtml = (a.excerpt || '').replace(/\n/g, '<br>');
 

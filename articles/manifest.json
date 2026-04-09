@@ -29,22 +29,162 @@
         {
           "slug": "da-03",
           "num": "03",
-          "title": "Accio 위험조항! — 계약서 검토 주문",
-          "excerpt": "200페이지 계약서에서 위험 조항을 30초 만에 소환.\n머글 시절엔 이틀 걸렸어요.",
-          "tag": "실전",
-          "audience": "변호사",
-          "date": "2026-04-16",
-          "status": "draft"
+          "title": "어떤 지팡이를 골라야 할까 — ChatGPT, Grok, Claude 비교 🪄",
+          "excerpt": "AI 도구가 너무 많아요. 다 써보고 정리했어요.\n결론부터 말하면 — 하나만 쓸 거면 Claude예요.",
+          "tag": "기초",
+          "audience": "전체 직종",
+          "date": "2026-04-10",
+          "status": "published"
         },
         {
           "slug": "da-04",
           "num": "04",
-          "title": "진료 기록 요약 — 30분을 30초로",
-          "excerpt": "오전 외래 끝나고 쌓인 기록.\n\"확인 안 하면 잠이 안 와요\" — 검증된 주문만.",
+          "title": "마법이 진짜 되는 순간 — 실전 사례 6가지 ✨",
+          "excerpt": "\"AI가 좋다는 건 알겠는데, 구체적으로 뭘 할 수 있는 건가요?\"\n직접 해보고, 시간을 재봤어요.",
+          "tag": "기초",
+          "audience": "전체 직종",
+          "date": "2026-04-11",
+          "status": "published"
+        },
+        {
+          "slug": "da-05",
+          "num": "05",
+          "title": "주문 문구의 기술 — 같은 질문, 10배 다른 결과 🪶",
+          "excerpt": "지팡이(Claude Code)도 잡았고 마법서(CLAUDE.md)도 썼어요.\n결과가 아쉬우면? 주문 문구(프롬프트)를 바꿔보세요.",
+          "tag": "기초",
+          "audience": "전체 직종",
+          "date": "2026-04-12",
+          "status": "published"
+        },
+        {
+          "slug": "da-06",
+          "num": "06",
+          "title": "내 서류를 AI에게 읽히다 — 파일 실전 📄",
+          "excerpt": "주문 문구만으로는 부족해요. 서류를 직접 건네야 진짜 업무가 시작돼요.\n파일 넣는 두 가지 방법과 실전 주문까지.",
           "tag": "실전",
-          "audience": "의사",
+          "audience": "전체 직종",
+          "date": "2026-04-13",
+          "status": "published"
+        },
+        {
+          "slug": "da-07",
+          "num": "07",
+          "title": "It's leviOsa! 내 말투로 쓰게 만드는 법 🪶",
+          "excerpt": "AI가 쓴 글은 다 똑같이 느껴지죠?\n내 말투를 가르치면 나처럼 써요. 3가지 방법을 알려줄게요.",
+          "tag": "실전",
+          "audience": "전체 직종",
+          "date": "2026-04-14",
+          "status": "published"
+        },
+        {
+          "slug": "da-08",
+          "num": "08",
+          "title": "Accio 피벗테이블! 숫자 업무를 말로 📊",
+          "excerpt": "VLOOKUP 몰라도 돼요. 피벗테이블 못 만들어도 돼요.\n말로 시키면 AI가 해줘요.",
+          "tag": "실전",
+          "audience": "전체 직종",
+          "date": "2026-04-15",
+          "status": "published"
+        },
+        {
+          "slug": "da-09",
+          "num": "09",
+          "title": "Revelio! 데이터를 그림으로 📈",
+          "excerpt": "숫자만 보면 졸리죠? 차트 하나면 1초 만에 이해돼요.\nAI한테 '그려줘' 한마디면 끝.",
+          "tag": "실전",
+          "audience": "전체 직종",
+          "date": "2026-04-16",
+          "status": "published"
+        },
+        {
+          "slug": "da-10",
+          "num": "10",
+          "title": "발표자료, 반나절이 30분으로 🎤",
+          "excerpt": "PPT 만들다 밤새본 적 있죠?\n구조잡기부터 디자인까지, AI한테 시키면 30분이면 돼요.",
+          "tag": "실전",
+          "audience": "전체 직종",
+          "date": "2026-04-17",
+          "status": "published"
+        },
+        {
+          "slug": "da-11",
+          "num": "11",
+          "title": "Opus, Sonnet, Haiku — 지팡이 코어 선택법 🪄",
+          "excerpt": "지팡이에도 코어가 있어요. 불사조 깃털, 유니콘 꼬리, 용의 심장줄.\n어떤 코어를 넣느냐에 따라 마법의 깊이와 속도가 달라져요.",
+          "tag": "심화",
+          "audience": "전체 직종",
           "date": "2026-04-18",
-          "status": "draft"
+          "status": "published"
+        },
+        {
+          "slug": "da-12",
+          "num": "12",
+          "title": "폴더별 마법서 — 업무를 분리하면 생기는 일 📂",
+          "excerpt": "DA 수업 #2에서 배운 폴더, 기억나시죠?\n이제 폴더마다 다른 마법서(Project CLAUDE.md)를 넣어볼 거예요.",
+          "tag": "심화",
+          "audience": "전체 직종",
+          "date": "2026-04-19",
+          "status": "published"
+        },
+        {
+          "slug": "da-13",
+          "num": "13",
+          "title": "나만의 주문 만들기 — 스킬 제작 ⚡",
+          "excerpt": "매번 같은 주문을 외우고 계세요?\n주문서(스킬)에 적어두면, 한 마디로 실행돼요.",
+          "tag": "심화",
+          "audience": "전체 직종",
+          "date": "2026-04-20",
+          "status": "published"
+        },
+        {
+          "slug": "da-14",
+          "num": "14",
+          "title": "DA 전체가 쓰는 법 — 팀 플랜 👥",
+          "excerpt": "혼자 연습하는 것도 좋지만, DA(덤블도어의 군대)는 같이 훈련할 때 더 강해요.\nClaude를 팀으로 쓰는 법을 알려드릴게요.",
+          "tag": "고급",
+          "audience": "전체 직종",
+          "date": "2026-04-21",
+          "status": "published"
+        },
+        {
+          "slug": "da-15",
+          "num": "15",
+          "title": "마법사 명함 만들기 — AI 온라인 브랜딩 🪪",
+          "excerpt": "전문성은 있는데 온라인에서 아무도 몰라요.\nAI로 콘텐츠를 만들면, 명함이 알아서 돌아다녀요.",
+          "tag": "고급",
+          "audience": "전체 직종",
+          "date": "2026-04-22",
+          "status": "published"
+        },
+        {
+          "slug": "da-16",
+          "num": "16",
+          "title": "주문의 경계선 — 언제 쓰고 언제 내가 할까 ⚖️",
+          "excerpt": "AI가 편하다고 다 맡기면 안 돼요.\n주문은 후보를 뽑아줄 뿐. 판단은 마법사의 영역.",
+          "tag": "고급",
+          "audience": "전체 직종",
+          "date": "2026-04-23",
+          "status": "published"
+        },
+        {
+          "slug": "da-17",
+          "num": "17",
+          "title": "AI가 내 지팡이를 직접 쓴다 — Computer Use 🖥️",
+          "excerpt": "지금까지는 대화로 시켰어요. 이제 AI가 화면을 보고 직접 클릭해요.\n차원이 다른 마법이에요.",
+          "tag": "고급",
+          "audience": "전체 직종",
+          "date": "2026-04-24",
+          "status": "published"
+        },
+        {
+          "slug": "da-18",
+          "num": "18",
+          "title": "자동 주문 — 반복 업무를 AI에게 넘기는 법 🔄",
+          "excerpt": "매번 같은 주문을 왜 직접 외우나요?\n자동 주문(크론잡)을 설정하면, AI가 알아서 시작해요.",
+          "tag": "고급",
+          "audience": "전체 직종",
+          "date": "2026-04-25",
+          "status": "published"
         }
       ]
     },

@@ -91,6 +91,23 @@
           "status": "draft"
         }
       ]
+    },
+    {
+      "id": "prophet",
+      "title": "예언자 일보",
+      "emoji": "📰",
+      "subtitle": "Daily Prophet",
+      "articles": [
+        {
+          "slug": "prophet-01",
+          "num": "01",
+          "title": "AI에게 조수를 붙여주는 법 — 서브에이전트 가이드",
+          "excerpt": "혼자서 모든 걸 하는 AI보다,\n조수를 부릴 줄 아는 AI가 더 잘해요.",
+          "date": "2026-04-09",
+          "tag": "Anthropic 공식",
+          "status": "published"
+        }
+      ]
     }
   ]
 }

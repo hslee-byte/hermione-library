@@ -6,10 +6,7 @@
 const SUPABASE_URL = 'https://bdgjwidsylevgkgruonm.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJkZ2p3aWRzeWxldmdrZ3J1b25tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2Njg4NjAsImV4cCI6MjA5MTI0NDg2MH0.7kmi9Q3AiB--OgxS3GggbFMi0RuPWlPU-XrYxs_mhuc';
 
-let supabase;
-if (typeof window !== 'undefined' && window.supabase) {
-  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
-}
+let supabase = null;
 
 const Library = {
   manifestUrl: 'articles/manifest.json',
@@ -411,6 +408,11 @@ const Library = {
 
   // Auto-detect page and init
   init() {
+    // Init Supabase client (CDN must be loaded by now via DOMContentLoaded)
+    if (!supabase && window.supabase) {
+      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    }
+
     // Handle OAuth redirect (Supabase returns tokens in hash)
     if (supabase && window.location.hash.includes('access_token')) {
       supabase.auth.getSession().then(() => {

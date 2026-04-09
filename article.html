@@ -283,6 +283,150 @@
     .article-nav { grid-template-columns: 1fr; text-align: center !important; }
     .nav-prev, .nav-next, .nav-home { text-align: center; }
   }
+
+  /* Comment System */
+  .comment-section {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem 64px;
+  }
+  .comment-header {
+    border-top: 2px solid var(--ink);
+    padding-top: 32px;
+    margin-bottom: 24px;
+  }
+  .comment-header h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .comment-header p { font-size: 15px; color: var(--ink-secondary); }
+
+  .comment-login-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: -0.06em;
+  }
+  .comment-login-btn:hover {
+    border-color: #4285f4;
+    box-shadow: 0 2px 8px rgba(66,133,244,0.15);
+  }
+  .comment-login-btn svg { width: 20px; height: 20px; }
+
+  .comment-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: var(--ink-secondary);
+  }
+  .comment-user img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+  .comment-user .logout-btn {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--ink-light);
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .comment-user .logout-btn:hover { color: var(--maroon); }
+
+  .comment-input-wrap {
+    margin: 16px 0;
+  }
+  .comment-input-wrap textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--bg-white);
+    resize: vertical;
+    letter-spacing: -0.02em;
+    line-height: 1.6;
+  }
+  .comment-input-wrap textarea:focus {
+    outline: none;
+    border-color: var(--maroon);
+  }
+  .comment-input-wrap textarea::placeholder { color: var(--ink-light); }
+
+  .comment-submit {
+    padding: 10px 20px;
+    background: var(--maroon);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .comment-submit:hover { opacity: 0.85; }
+  .comment-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .comment-list { margin-top: 32px; }
+  .comment-item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .comment-item:last-child { border-bottom: none; }
+  .comment-item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .comment-item-header img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+  }
+  .comment-item-header .name { font-weight: 600; font-size: 14px; }
+  .comment-item-header .date { font-size: 12px; color: var(--ink-light); margin-left: auto; }
+  .comment-item-body {
+    font-size: 15px;
+    color: var(--ink-secondary);
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+  .comment-item .delete-btn {
+    background: none; border: none; color: var(--ink-light);
+    font-size: 12px; cursor: pointer; margin-top: 4px;
+  }
+  .comment-item .delete-btn:hover { color: var(--maroon); }
+
+  .comment-empty {
+    text-align: center;
+    padding: 32px 0;
+    color: var(--ink-light);
+    font-size: 15px;
+  }
+
+  .comment-loading {
+    text-align: center;
+    padding: 24px 0;
+    color: var(--ink-light);
+  }
+
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .comment-item { animation: fadeIn 0.3s ease; }
 </style>
 </head>
 <body>
@@ -335,6 +479,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="js/router.js"></script>
 </body>
 </html>

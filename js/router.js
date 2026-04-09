@@ -1,11 +1,20 @@
 /**
  * Hermione's Library — Router & Renderer
- * Zero-build markdown content system
+ * Zero-build markdown content system + Supabase comments
  */
+
+const SUPABASE_URL = 'https://bdgjwidsylevgkgruonm.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJkZ2p3aWRzeWxldmdrZ3J1b25tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2Njg4NjAsImV4cCI6MjA5MTI0NDg2MH0.7kmi9Q3AiB--OgxS3GggbFMi0RuPWlPU-XrYxs_mhuc';
+
+let supabase;
+if (typeof window !== 'undefined' && window.supabase) {
+  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+}
 
 const Library = {
   manifestUrl: 'articles/manifest.json',
   manifest: null,
+  currentUser: null,
 
   // Parse YAML-like frontmatter from markdown
   parseFrontmatter(raw) {
@@ -173,8 +182,8 @@ const Library = {
     // Convert ☐/☑ to interactive checkboxes (localStorage)
     this.initCheckboxes(slug, contentEl);
 
-    // Add giscus comments
-    this.initComments();
+    // Add Supabase comments
+    this.initComments(slug);
 
     // Render prev/next
     const { prev, next } = this.getPrevNext(slug);
@@ -199,7 +208,6 @@ const Library = {
     const storageKey = `hermione-hw-${slug}`;
     const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
 
-    // Find all ☐ and ☑ in table cells and replace with real checkboxes
     container.querySelectorAll('td').forEach(td => {
       const text = td.textContent.trim();
       if (text === '☐' || text === '☑') {
@@ -213,7 +221,6 @@ const Library = {
         cb.addEventListener('change', () => {
           saved[idx] = cb.checked;
           localStorage.setItem(storageKey, JSON.stringify(saved));
-          // Strike-through the row text when checked
           const row = cb.closest('tr');
           if (row) {
             row.querySelectorAll('td:not(:last-child)').forEach(cell => {
@@ -227,7 +234,6 @@ const Library = {
         td.style.textAlign = 'center';
         td.appendChild(cb);
 
-        // Apply saved state styling
         if (checked) {
           const row = td.closest('tr');
           if (row) {
@@ -241,44 +247,181 @@ const Library = {
     });
   },
 
-  // ===== GISCUS COMMENTS =====
-  initComments() {
-    const commentSection = document.createElement('div');
-    commentSection.style.cssText = 'max-width:780px; margin:0 auto; padding:0 2rem 64px;';
-    commentSection.innerHTML = `
-      <div style="border-top:2px solid var(--ink); padding-top:32px; margin-bottom:24px;">
-        <h2 style="font-size:22px; font-weight:700; margin-bottom:8px;">🙋‍♀️ 손들고 결과 공유하기</h2>
-        <p style="font-size:15px; color:var(--ink-secondary);">해보신 분, 댓글로 알려주세요. GitHub 계정으로 로그인하면 댓글을 남길 수 있어요.</p>
+  // ===== SUPABASE COMMENTS =====
+  async initComments(slug) {
+    // Check auth state
+    if (supabase) {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const u = session.user;
+        this.currentUser = {
+          id: u.id,
+          name: u.user_metadata?.full_name || u.email?.split('@')[0] || '마법사',
+          avatar: u.user_metadata?.avatar_url || null,
+          email: u.email
+        };
+      }
+    }
+
+    const section = document.createElement('div');
+    section.className = 'comment-section';
+    section.innerHTML = `
+      <div class="comment-header">
+        <h2>🙋‍♀️ 손들고 결과 공유하기</h2>
+        <p>해보신 분, 댓글로 알려주세요!</p>
+      </div>
+      <div id="comment-auth"></div>
+      <div id="comment-input"></div>
+      <div id="comment-list"><div class="comment-loading">📖 댓글 불러오는 중...</div></div>
+    `;
+
+    const navEl = document.getElementById('article-nav');
+    if (navEl) {
+      navEl.parentNode.insertBefore(section, navEl);
+    }
+
+    this.renderAuth();
+    this.renderCommentInput(slug);
+    this.loadComments(slug);
+  },
+
+  renderAuth() {
+    const el = document.getElementById('comment-auth');
+    if (!el) return;
+
+    if (this.currentUser) {
+      el.innerHTML = `
+        <div class="comment-user">
+          ${this.currentUser.avatar ? `<img src="${this.currentUser.avatar}" alt="">` : ''}
+          <span><strong>${this.currentUser.name}</strong>님으로 로그인됨</span>
+          <button class="logout-btn" id="logout-btn">로그아웃</button>
+        </div>
+      `;
+      document.getElementById('logout-btn')?.addEventListener('click', async () => {
+        await supabase.auth.signOut();
+        this.currentUser = null;
+        this.renderAuth();
+        this.renderCommentInput(new URLSearchParams(window.location.search).get('slug'));
+      });
+    } else {
+      el.innerHTML = `
+        <button class="comment-login-btn" id="google-login-btn">
+          <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Google로 로그인
+        </button>
+      `;
+      document.getElementById('google-login-btn')?.addEventListener('click', async () => {
+        await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: { redirectTo: window.location.href }
+        });
+      });
+    }
+  },
+
+  renderCommentInput(slug) {
+    const el = document.getElementById('comment-input');
+    if (!el) return;
+
+    if (!this.currentUser) {
+      el.innerHTML = '';
+      return;
+    }
+
+    el.innerHTML = `
+      <div class="comment-input-wrap">
+        <textarea id="comment-textarea" placeholder="해보신 결과나 질문을 남겨주세요 📝"></textarea>
+        <button class="comment-submit" id="comment-submit-btn">댓글 남기기</button>
       </div>
     `;
 
-    const script = document.createElement('script');
-    script.src = 'https://giscus.app/client.js';
-    script.setAttribute('data-repo', 'hslee-byte/hermione-library');
-    script.setAttribute('data-repo-id', 'R_kgDOR9CaJg');
-    script.setAttribute('data-category', 'General');
-    script.setAttribute('data-category-id', 'DIC_kwDOR9CaJs4C6YO2');
-    script.setAttribute('data-mapping', 'pathname');
-    script.setAttribute('data-strict', '0');
-    script.setAttribute('data-reactions-enabled', '1');
-    script.setAttribute('data-emit-metadata', '0');
-    script.setAttribute('data-input-position', 'top');
-    script.setAttribute('data-theme', 'light');
-    script.setAttribute('data-lang', 'ko');
-    script.setAttribute('crossorigin', 'anonymous');
-    script.async = true;
+    document.getElementById('comment-submit-btn')?.addEventListener('click', async () => {
+      const textarea = document.getElementById('comment-textarea');
+      const content = textarea?.value?.trim();
+      if (!content) return;
 
-    commentSection.appendChild(script);
+      const btn = document.getElementById('comment-submit-btn');
+      btn.disabled = true;
+      btn.textContent = '전송 중...';
 
-    // Insert before the article-nav
-    const navEl = document.getElementById('article-nav');
-    if (navEl) {
-      navEl.parentNode.insertBefore(commentSection, navEl);
+      const { error } = await supabase.from('comments').insert({
+        article_slug: slug,
+        user_id: this.currentUser.id,
+        user_name: this.currentUser.name,
+        user_avatar: this.currentUser.avatar,
+        content
+      });
+
+      if (error) {
+        btn.textContent = '오류 발생 — 다시 시도해주세요';
+        btn.disabled = false;
+        return;
+      }
+
+      textarea.value = '';
+      btn.textContent = '댓글 남기기';
+      btn.disabled = false;
+      this.loadComments(slug);
+    });
+  },
+
+  async loadComments(slug) {
+    const el = document.getElementById('comment-list');
+    if (!el || !supabase) return;
+
+    const { data, error } = await supabase
+      .from('comments')
+      .select('*')
+      .eq('article_slug', slug)
+      .order('created_at', { ascending: true });
+
+    if (error) {
+      el.innerHTML = '<div class="comment-empty">댓글을 불러올 수 없어요 😅</div>';
+      return;
     }
+
+    if (!data || data.length === 0) {
+      el.innerHTML = '<div class="comment-empty">아직 댓글이 없어요. 첫 번째로 손들어주세요 🙋‍♀️</div>';
+      return;
+    }
+
+    el.innerHTML = data.map(c => {
+      const date = new Date(c.created_at).toLocaleDateString('ko-KR', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+      const isOwn = this.currentUser?.id === c.user_id;
+      const escapedContent = c.content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return `
+        <div class="comment-item" data-id="${c.id}">
+          <div class="comment-item-header">
+            ${c.user_avatar ? `<img src="${c.user_avatar}" alt="">` : ''}
+            <span class="name">${c.user_name}</span>
+            <span class="date">${date}</span>
+          </div>
+          <div class="comment-item-body">${escapedContent}</div>
+          ${isOwn ? `<button class="delete-btn" onclick="Library.deleteComment('${c.id}', '${slug}')">삭제</button>` : ''}
+        </div>
+      `;
+    }).join('');
+  },
+
+  async deleteComment(id, slug) {
+    if (!confirm('댓글을 삭제할까요?')) return;
+    await supabase.from('comments').delete().eq('id', id);
+    this.loadComments(slug);
   },
 
   // Auto-detect page and init
   init() {
+    // Handle OAuth redirect (Supabase returns tokens in hash)
+    if (supabase && window.location.hash.includes('access_token')) {
+      supabase.auth.getSession().then(() => {
+        // Remove hash and reload cleanly
+        const cleanUrl = window.location.href.split('#')[0];
+        window.history.replaceState(null, '', cleanUrl);
+        window.location.reload();
+      });
+      return;
+    }
+
     const path = window.location.pathname;
     if (path.includes('article.html') || path.includes('article')) {
       this.initArticle();

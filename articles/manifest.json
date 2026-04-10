@@ -257,6 +257,15 @@
           "date": "2026-04-09",
           "tag": "Anthropic 공식",
           "status": "published"
+        },
+        {
+          "slug": "prophet-02",
+          "num": "02",
+          "title": "공개하지 않기로 한 마법 — Claude Mythos Preview & Project Glasswing",
+          "excerpt": "역대 가장 강력한 AI 모델을 만들어놓고, 공개하지 않기로 했어요.\n왜? 240페이지를 다 읽고 정리했어요.",
+          "date": "2026-04-10",
+          "tag": "Anthropic 공식",
+          "status": "published"
         }
       ]
     }

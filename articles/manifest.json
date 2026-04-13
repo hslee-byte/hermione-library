@@ -196,6 +196,16 @@
           "audience": "전체 직종",
           "date": "2026-04-25",
           "status": "published"
+        },
+        {
+          "slug": "da-19",
+          "num": "19",
+          "title": "발표 주문, 어떤 지팡이가 좋을까 — AI PPT 8개 비교 🎤",
+          "excerpt": "PPT 만드는 지팡이(AI 도구)가 8개나 있어요.\n같은 주제로 다 만들어보고 비교했어요.",
+          "tag": "실전",
+          "audience": "전체 직종",
+          "date": "2026-04-13",
+          "status": "published"
         }
       ]
     },

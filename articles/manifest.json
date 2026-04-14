@@ -216,6 +216,16 @@
           "audience": "전체 직종",
           "date": "2026-04-14",
           "status": "published"
+        },
+        {
+          "slug": "da-21",
+          "num": "21",
+          "title": "Scourgify! 엉망인 데이터를 깨끗하게 ✨",
+          "excerpt": "거래처마다 양식이 다르고, 날짜가 제각각이고, 빈 셀이 여기저기...\n청소 주문 한 마디면 깨끗해져요.",
+          "tag": "실전",
+          "audience": "전체 직종",
+          "date": "2026-04-14",
+          "status": "published"
         }
       ]
     },

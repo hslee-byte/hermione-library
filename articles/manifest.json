@@ -206,6 +206,16 @@
           "audience": "전체 직종",
           "date": "2026-04-13",
           "status": "published"
+        },
+        {
+          "slug": "da-20",
+          "num": "20",
+          "title": "Accio 피벗테이블! 엑셀에 마법사를 앉히다 📊",
+          "excerpt": "Claude가 엑셀 안에 직접 들어갔어요.\n사이드 패널에서 대화하면서 피벗테이블, 차트, 수식을 조작해요.",
+          "tag": "실전",
+          "audience": "전체 직종",
+          "date": "2026-04-14",
+          "status": "published"
         }
       ]
     },
